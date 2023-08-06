@@ -15,15 +15,22 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getAllBooks(){
+    public List<BookDto> getAllBooks(){
         return bookService.getAllBooks();
     }
 
-    @PostMapping("/create")
-    public void create (@RequestParam String ISBN,
-                        @RequestParam String name,
-                        @RequestParam String author,
-                        @RequestParam Integer year) {
-        bookService.create(ISBN, name, author, year);
+    @PostMapping("/create-body/{isbn}")
+    public String create(@RequestBody BookDto bookDto, @PathVariable String isbn) {
+        return bookService.create(bookDto, isbn);
+    }
+
+    @PutMapping("/{isbn}")
+    public String update(@RequestBody BookDto bookDto, @PathVariable String isbn) {
+        return bookService.update(bookDto, isbn);
+    }
+
+    @DeleteMapping("/{isbn}")
+    public String delete(@PathVariable String isbn) {
+        return bookService.delete(isbn);
     }
 }
